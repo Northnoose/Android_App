@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Kalender_D_S</string>
+
+    <string name="month_calendar_header">%1$s %2$d</string>
+    <string-array name="weekdays_short">
+        <item>Man</item>
+        <item>Tir</item>
+        <item>Ons</item>
+        <item>Tor</item>
+        <item>Fre</item>
+        <item>Lør</item>
+        <item>Søn</item>
+    </string-array>
 </resources>
