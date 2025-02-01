@@ -22,5 +22,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCalendarScreen() {
-    CalendarScreen(year = 2025, month = 1, viewModel = CalendarViewModel())
+    CalendarScreen(initialYear = 2025, viewModel = CalendarViewModel())
 }
+
+// comment12
