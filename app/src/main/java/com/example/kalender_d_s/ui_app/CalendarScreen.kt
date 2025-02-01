@@ -23,31 +23,39 @@ import com.example.kalender_d_s.viewmodel.CalendarViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.time.Month
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
 
 @Composable
-fun CalendarScreen(year: Int,
-                   month: Int,
-                   viewModel: CalendarViewModel = viewModel()) {
-    var monthsToShow by remember { mutableIntStateOf(1) }
+fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel()) {
+    var currentYear by remember { mutableIntStateOf(initialYear) }
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)) {
 
-        val monthName = Month.of(month).name.lowercase().replaceFirstChar { it.uppercaseChar() }
-        Text("Calendar $year", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        MonthSelectionControls(
-            monthsToShow = monthsToShow,
-            onMonthsChange = {monthsToShow = it}
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Button(onClick = {currentYear--}) {
+            Text(text = "Forrige år")
+        }
+        Text(
+            text = "Kalender for $currentYear",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(8.dp),
+            textAlign = TextAlign.Center
         )
+        Button(onClick = {currentYear++}) {
+            Text(text = "Neste år")
+        }
+    }
+
+
 
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -55,20 +63,15 @@ fun CalendarScreen(year: Int,
 
 
         LazyColumn {
-            items(monthsToShow) { i ->
-                val currentMonth = (month - 1 + i) % 12 + 1
-                val currentYear = year + (month - 1 + i) / 12
+            items(12) { index ->
+                val currentMonth = index + 1
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(
+                    text = Month.of(currentMonth).name.lowercase().replaceFirstChar { it.uppercaseChar() },
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(start = 21.dp)
 
-                key("$currentMonth-$currentYear") {
-
-
-                    Spacer(modifier = Modifier.height(3.dp))
-                    Text(
-                        "${Month.of(currentMonth).name.lowercase().replaceFirstChar { it.uppercaseChar() }} ",
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier.padding(start = 21.dp)
-
-                    )
+                )
 
                     WeekDaysHeader()
                     CalendarGrid(currentYear, currentMonth, viewModel)
@@ -78,33 +81,6 @@ fun CalendarScreen(year: Int,
 
 
     }
-}
-
-@Composable
-fun MonthSelectionControls(
-    monthsToShow: Int,
-    onMonthsChange: (Int) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp),
-        horizontalArrangement = Arrangement.spacedBy(43.dp,Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically) {
-
-        Button(onClick = {if (monthsToShow > 1) onMonthsChange(monthsToShow - 1)}) {
-            Text("-")
-        }
-        Text(
-            "Viser $monthsToShow måned(er)",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.align(Alignment.CenterVertically))
-        Button(onClick = { if (monthsToShow < 3) onMonthsChange(monthsToShow + 1)}) {
-            Text("+")
-        }
-    }
-}
-
 
 
 @Composable
