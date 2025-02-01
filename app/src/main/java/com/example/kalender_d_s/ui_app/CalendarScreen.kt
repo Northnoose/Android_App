@@ -1,7 +1,5 @@
 package com.example.kalender_d_s.ui_app
 
-
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,70 +30,68 @@ import java.time.Month
 @Composable
 fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel()) {
     var currentYear by remember { mutableIntStateOf(initialYear) }
-    var showWorkDays by remember { mutableStateOf(false) }
-    var selectedMonth by remember { mutableStateOf(1) }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
     ) {
-        Button(onClick = {currentYear--}) {
-            Text(text = "Forrige år")
-        }
-        Text(
-            text = "Kalender for $currentYear",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(8.dp),
-            textAlign = TextAlign.Center
-        )
-        Button(onClick = {currentYear++}) {
-            Text(text = "Neste år")
-        }
-    }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = {showWorkDays = !showWorkDays}) {
-            Text(text = if(showWorkDays) "Skjul Arbeidsdager" else "Vis Arbeidsdager")
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = { currentYear-- }) {
+                Text(text = "Forrige år")
+            }
+            Text(
+                text = "Kalender for $currentYear",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(8.dp),
+                textAlign = TextAlign.Center
+            )
+            Button(onClick = { currentYear++ }) {
+                Text(text = "Neste år")
+            }
         }
-
-        if(showWorkDays){
-            Text(text = "Antall Arbeidsdager: ${viewModel.getWorkingDays(currentYear, selectedMonth)}",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(vertical = 16.dp))
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn {
             items(12) { index ->
                 val currentMonth = index + 1
-                Spacer(modifier = Modifier.height(3.dp))
+                var showWorkDays by remember { mutableStateOf(false) }
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = Month.of(currentMonth).name.lowercase().replaceFirstChar { it.uppercaseChar() },
+                    text = Month.of(currentMonth).name.lowercase()
+                        .replaceFirstChar { it.uppercaseChar() },
                     style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier
-                        .padding(start = 21.dp)
-                        .clickable {
-                            selectedMonth = currentMonth
-                        }
-
+                    modifier = Modifier.padding(start = 21.dp)
                 )
+
+                Button(onClick = { showWorkDays = !showWorkDays }) {
+                    Text(text = if (showWorkDays) "Skjul Arbeidsdager" else "Vis Arbeidsdager")}
+
+
+                    if (showWorkDays) {
+                        Text(
+                            text = "Antall Arbeidsdager: ${
+                                viewModel.getWorkingDays(
+                                    currentYear,
+                                    currentMonth
+                                )
+                            }",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(vertical = 16.dp)
+                        )
+                    }
+
+
 
                     WeekDaysHeader()
                     CalendarGrid(currentYear, currentMonth, viewModel)
-            }
                 }
             }
-
-
-
-
+        }
     }
 
 
