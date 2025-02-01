@@ -25,7 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kalender_d_s.viewmodel.CalendarViewModel
 import java.time.Month
 
-// comment12
+// Sjekk om den NYE VERSION ER HER STEFFEN!!
 @Composable
 fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel()) {
     var currentYear by remember { mutableIntStateOf(initialYear) }
