@@ -1,5 +1,7 @@
 package com.example.kalender_d_s.ui_app
 
+
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,6 +32,8 @@ import java.time.Month
 @Composable
 fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel()) {
     var currentYear by remember { mutableIntStateOf(initialYear) }
+    var showWorkDays by remember { mutableStateOf(false) }
+    var selectedMonth by remember { mutableStateOf(1) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -53,12 +58,19 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
         }
     }
 
-
-
-
         Spacer(modifier = Modifier.height(16.dp))
 
+        Button(onClick = {showWorkDays = !showWorkDays}) {
+            Text(text = if(showWorkDays) "Skjul Arbeidsdager" else "Vis Arbeidsdager")
+        }
 
+        if(showWorkDays){
+            Text(text = "Antall Arbeidsdager: ${viewModel.getWorkingDays(currentYear, selectedMonth)}",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(vertical = 16.dp))
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn {
             items(12) { index ->
@@ -67,15 +79,21 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
                 Text(
                     text = Month.of(currentMonth).name.lowercase().replaceFirstChar { it.uppercaseChar() },
                     style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(start = 21.dp)
+                    modifier = Modifier
+                        .padding(start = 21.dp)
+                        .clickable {
+                            selectedMonth = currentMonth
+                        }
 
                 )
 
                     WeekDaysHeader()
                     CalendarGrid(currentYear, currentMonth, viewModel)
+            }
                 }
             }
-        }
+
+
 
 
     }
