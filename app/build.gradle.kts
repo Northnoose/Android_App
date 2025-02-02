@@ -39,8 +39,15 @@ android {
     }
 }
 
+configurations {
+    all {
+        exclude(group = "com.google.guava", module = "listenablefuture")
+        exclude(group = "org.hamcrest", module = "hamcrest-core")
+    }
+}
+
 dependencies {
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -64,5 +71,8 @@ dependencies {
 
 
 
-    
+
+
+
+
 }
