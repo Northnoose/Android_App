@@ -1,6 +1,5 @@
 package com.example.kalender_d_s.ui_app
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -9,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,10 +22,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kalender_d_s.model.CalendarData
 import com.example.kalender_d_s.viewmodel.CalendarViewModel
@@ -40,7 +42,6 @@ fun CalendarGrid(
     selectedMonth: Int?,
     onDateSelected: (LocalDate?, Int?) -> Unit
 ) {
-    Log.d("CalendarGrid", "Tegner kalender for: $month $year")
     val allDays = viewModel.getMonthDays(year, month)
     val startOfMonth = viewModel.getStartOfMonth(year, month)
 
@@ -60,7 +61,9 @@ fun CalendarGrid(
             Row(modifier = Modifier.fillMaxWidth()) {
                 week.forEach { day ->
                     if (day == null) {
-                        Spacer(modifier = Modifier.weight(1f).padding(4.dp))
+                        Spacer(modifier = Modifier
+                            .weight(1f)
+                            .padding(4.dp))
                     } else {
                         val isWeekend = day.dayOfWeek.value in 6..7
                         val isSelected = selectedDate == day && selectedMonth == month
@@ -75,6 +78,7 @@ fun CalendarGrid(
                                 .weight(1f)
                                 .padding(4.dp)
                                 .scale(animatedScale)
+                                .zIndex(if (isSelected) 1f else 0f)
                                 .clickable {
                                     if (isSelected) {
                                         onDateSelected(null, null)
@@ -87,16 +91,25 @@ fun CalendarGrid(
                                 else MaterialTheme.colorScheme.surface
                             )
                         ) {
-                            Text(
-                                text = day.dayOfMonth.toString(),
-                                modifier = Modifier.padding(8.dp)
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = day.dayOfMonth.toString(),
+                                    modifier = Modifier.padding(8.dp),
+                                )
+                            }
                         }
                     }
                 }
                 val emptyDays = 7 - week.size
                 repeat(emptyDays) {
-                    Spacer(modifier = Modifier.weight(1f).padding(4.dp))
+                    Spacer(modifier = Modifier
+                        .weight(1f)
+                        .padding(4.dp))
                 }
             }
         }
