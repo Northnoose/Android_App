@@ -1,5 +1,6 @@
 package com.example.kalender_d_s.ui_app
 
+import androidx.annotation.ColorRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -61,10 +63,11 @@ fun CalendarGrid(
 
         gridDays.chunked(7).forEach { week ->
             Row(modifier = Modifier.fillMaxWidth()) {
-                Box(
+
+                Box( //Dette er Ukenummrene
                     modifier = Modifier
                         .weight(1f)
-                        .padding(4.dp)
+                        .padding(2.dp)
                 ){
                     Column(
                         modifier = Modifier
@@ -73,18 +76,21 @@ fun CalendarGrid(
                         horizontalAlignment = Alignment.CenterHorizontally
                     )
                     {
-                        val isSelectedWeek = week.contains(selectedDate)
+                        val isSelectedWeek = selectedDate != null && week.contains(selectedDate)
                         Text(
                             text = "${
                                 week.firstOrNull { it != null }
                                     ?.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) ?: "?"
                             }",
                             color = if(isSelectedWeek) Color.Red else Color.Black,
-                            style = MaterialTheme.typography.bodyLarge,
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = if (isSelectedWeek) FontWeight.Bold else FontWeight.Normal
+                            ),
                             modifier = Modifier.padding(8.dp)
                         )
                     }
                 }
+
                 week.forEach { day ->
                     if (day == null) {
                         Spacer(modifier = Modifier
