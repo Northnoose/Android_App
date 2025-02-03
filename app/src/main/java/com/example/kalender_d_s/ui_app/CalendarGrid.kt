@@ -1,6 +1,5 @@
 package com.example.kalender_d_s.ui_app
 
-import androidx.annotation.ColorRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

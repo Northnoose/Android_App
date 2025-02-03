@@ -10,6 +10,8 @@ activityCompose = "1.10.0"
 composeBom = "2025.01.00"
 lifecycleViewmodelCompose = "2.8.7"
 testng = "6.9.6"
+junitKtx = "1.2.1"
+uiTestJunit4Android = "1.7.7"
 
 
 [libraries]
@@ -29,6 +31,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "uiTestJunit4Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

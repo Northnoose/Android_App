@@ -1,24 +1,48 @@
 package com.example.kalender_d_s
 
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import com.example.kalender_d_s.ui_app.CalendarScreen
+import com.example.kalender_d_s.viewmodel.CalendarViewModel
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
-
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class CalendarUITest {
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.kalender_d_s", appContext.packageName)
+    fun testDaysSinceJanDialog() {
+
+        val viewModel = CalendarViewModel()
+
+        composeTestRule.setContent {
+            CalendarScreen(initialYear = 2025)
+        }
+
+        val expectedDaysSinceJan = viewModel.getSinceJan(2025, 1, 15)
+
+        composeTestRule.onAllNodes(hasText("15")).printToLog("TestLog")
+
+        composeTestRule.onAllNodes(hasText("15"))
+            .onFirst()
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText("$expectedDaysSinceJan dager siden 1. januar")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText("$expectedDaysSinceJan dager siden 1. januar")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText("$expectedDaysSinceJan dager siden 1. januar")
+            .assertDoesNotExist()
     }
 }
