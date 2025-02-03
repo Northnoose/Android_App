@@ -9,6 +9,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,13 +26,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kalender_d_s.model.CalendarData
 import com.example.kalender_d_s.viewmodel.CalendarViewModel
 import java.time.LocalDate
+import java.time.temporal.IsoFields
 
 @Composable
 fun CalendarGrid(
@@ -59,6 +61,30 @@ fun CalendarGrid(
 
         gridDays.chunked(7).forEach { week ->
             Row(modifier = Modifier.fillMaxWidth()) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(4.dp)
+                ){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    )
+                    {
+                        val isSelectedWeek = week.contains(selectedDate)
+                        Text(
+                            text = "${
+                                week.firstOrNull { it != null }
+                                    ?.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) ?: "?"
+                            }",
+                            color = if(isSelectedWeek) Color.Red else Color.Black,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
                 week.forEach { day ->
                     if (day == null) {
                         Spacer(modifier = Modifier
@@ -116,7 +142,7 @@ fun CalendarGrid(
 
 
         if (selectedDate != null && selectedMonth == month) {
-            val daysSinceJan = CalendarData.DaysSinceFirstJan(
+            val daysSinceJan = viewModel.getSinceJan(
                 selectedDate.year,
                 selectedDate.monthValue,
                 selectedDate.dayOfMonth

@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun WeekDaysHeader() {
     Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-        listOf("Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn").forEach { day ->
+        listOf("Uke","Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn").forEach { day ->
             Text(text = day, modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.bodyLarge, // Tilpass tekststil
                 textAlign = TextAlign.Center,
