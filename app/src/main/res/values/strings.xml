@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Kalender</string>
+    <string name="language_toggle">English</string>
+    <string name="show_workdays">Vis arbeidsdager</string>
+    <string name="hide_workdays">Skjul arbeidsdager</string>
+    <string name="num_workdays">Antall arbeidsdager: %d</string>
+    <string name="days_since_jan">%d dager siden 1. januar</string>
 
-    <string name="month_calendar_header">%1$s %2$d</string>
-    <string-array name="weekdays_short">
+    <string-array name="weekdays">
+        <item>Uke</item>
         <item>Man</item>
         <item>Tir</item>
         <item>Ons</item>
@@ -10,5 +15,20 @@
         <item>Fre</item>
         <item>Lør</item>
         <item>Søn</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>Januar</item>
+        <item>Februar</item>
+        <item>Mars</item>
+        <item>April</item>
+        <item>Mai</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>August</item>
+        <item>September</item>
+        <item>Oktober</item>
+        <item>November</item>
+        <item>Desember</item>
     </string-array>
 </resources>

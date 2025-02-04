@@ -27,11 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kalender_d_s.R
 import com.example.kalender_d_s.viewmodel.CalendarViewModel
 import java.time.LocalDate
 import java.time.temporal.IsoFields
@@ -167,7 +169,7 @@ fun CalendarGrid(
                         .clickable { onDateSelected(null, null) }
                 ) {
                     Text(
-                        text = "$daysSinceJan dager siden 1. januar",
+                        text = stringResource(R.string.days_since_jan, daysSinceJan),
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(8.dp),
                         textAlign = TextAlign.Center,
