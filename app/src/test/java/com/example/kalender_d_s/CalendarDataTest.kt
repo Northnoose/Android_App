@@ -3,7 +3,6 @@ package com.example.kalender_d_s
 
 import com.example.kalender_d_s.model.CalendarData
 import org.junit.Assert.assertEquals
-import java.time.LocalDate
 import org.junit.Test as Test1
 
 class CalendarDataTest {
