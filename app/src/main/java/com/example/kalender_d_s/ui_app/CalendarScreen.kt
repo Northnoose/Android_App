@@ -73,14 +73,14 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
                 }
             }
 
-            // ✅ Month List
+
             LazyColumn {
-                items(12) { index ->
+                items(12) { index -> // Vis alle måneder på samme skjerm.
                     val currentMonth = index + 1
                     var showWorkDays by remember { mutableStateOf(false) }
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // ✅ Month title & Workdays button
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -89,7 +89,7 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = months[currentMonth - 1], // ✅ Correct month name
+                            text = months[currentMonth - 1],
                             style = MaterialTheme.typography.headlineMedium,
                             modifier = Modifier.weight(1f)
                         )
@@ -103,7 +103,7 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
                         }
                     }
 
-                    // ✅ Workdays count
+
                     if (showWorkDays) {
                         Text(
                             text = stringResource(R.string.num_workdays, viewModel.getWorkingDays(currentYear, currentMonth)),

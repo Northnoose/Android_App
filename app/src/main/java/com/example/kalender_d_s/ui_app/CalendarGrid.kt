@@ -100,7 +100,7 @@ fun CalendarGrid(
                     } else {
                         val isWeekend = day.dayOfWeek.value in 6..7
                         val isSelected = selectedDate == day && selectedMonth == month
-                        val animatedScale by animateFloatAsState(
+                        val animatedScale by animateFloatAsState( // Animasjon for klikkbare datoer
                             targetValue = if (isSelected) 1.5f else 1f,
                             animationSpec = tween(durationMillis = 300),
                             label = "scale"
@@ -160,7 +160,7 @@ fun CalendarGrid(
                 enter = fadeIn(animationSpec = tween(300)) + slideInVertically(initialOffsetY = { it / 2 }),
                 exit = fadeOut(animationSpec = tween(300)) + slideOutVertically(targetOffsetY = { it / 2 })
             ) {
-                Surface(
+                Surface( // Tekstboks for visning av dager siden januar
                     shape = MaterialTheme.shapes.medium,
                     color = MaterialTheme.colorScheme.primaryContainer,
                     modifier = Modifier
