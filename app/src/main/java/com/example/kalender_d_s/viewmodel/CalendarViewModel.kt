@@ -6,18 +6,18 @@ import java.time.LocalDate
 
 class CalendarViewModel : ViewModel(){
     fun getMonthDays(year: Int, month: Int): List<LocalDate> {
-        return CalendarData.DaysPerMonth(year, month)
+        return CalendarData.daysPerMonth(year, month)
     }
 
     fun getStartOfMonth(year: Int, month: Int) : Int {
-        return CalendarData.StartOfMonth(year, month)
+        return CalendarData.startOfMonth(year, month)
     }
 
     fun getWorkingDays(year: Int, month: Int) : Int {
-        return CalendarData.WorkDaysPerMonth(year, month)
+        return CalendarData.workDaysPerMonth(year, month)
     }
 
     fun getSinceJan(year: Int, month: Int, day: Int) : Long {
-        return CalendarData.DaysSinceFirstJan(year, month, day)
+        return CalendarData.daysSinceFirstJan(year, month, day)
     }
 }
