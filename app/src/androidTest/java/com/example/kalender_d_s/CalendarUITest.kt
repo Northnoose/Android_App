@@ -21,7 +21,7 @@ class CalendarUITest {
         val viewModel = CalendarViewModel()
 
         composeTestRule.setContent {
-            CalendarScreen(initialYear = 2025)
+            CalendarScreen(initialYear = 2025, initialMonth = 1)
         }
 
         val expectedDaysSinceJan = viewModel.getSinceJan(2025, 1, 15)
@@ -44,5 +44,6 @@ class CalendarUITest {
         composeTestRule
             .onNodeWithText("$expectedDaysSinceJan dager siden 1. januar")
             .assertDoesNotExist()
+
     }
 }

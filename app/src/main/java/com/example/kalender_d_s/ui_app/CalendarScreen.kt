@@ -22,10 +22,10 @@ import com.example.kalender_d_s.viewmodel.CalendarViewModel
 import java.time.LocalDate
 
 @Composable
-fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel()) {
+fun CalendarScreen(initialYear: Int, initialMonth: Int, viewModel: CalendarViewModel = viewModel()) {
     var currentYear by remember { mutableIntStateOf(initialYear) }
     var selectedDate: LocalDate? by remember { mutableStateOf(null) }
-    var selectedMonth by remember { mutableStateOf<Int?>(null) }
+    var selectedMonth by remember { mutableIntStateOf(initialMonth) }
 
 
     val months = stringArrayResource(R.array.months)
@@ -36,7 +36,6 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
             .fillMaxSize()
             .clickable {
                 selectedDate = null
-                selectedMonth = null
             }
     ) {
         Column(
@@ -121,7 +120,9 @@ fun CalendarScreen(initialYear: Int, viewModel: CalendarViewModel = viewModel())
                         selectedMonth = selectedMonth,
                         onDateSelected = { date, month ->
                             selectedDate = date
-                            selectedMonth = month
+                            if (month != null) {
+                                selectedMonth = month
+                            }
                         }
                     )
                 }

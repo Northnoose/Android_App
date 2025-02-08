@@ -11,7 +11,7 @@ import com.example.kalender_d_s.R
 import com.example.kalender_d_s.viewmodel.CalendarViewModel
 
 @Composable
-fun CalendarBackground(initialYear: Int, viewModel: CalendarViewModel) {
+fun CalendarBackground(initialYear: Int, initialMonth: Int, viewModel: CalendarViewModel) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -22,6 +22,6 @@ fun CalendarBackground(initialYear: Int, viewModel: CalendarViewModel) {
             contentScale = ContentScale.Crop
         )
 
-        CalendarScreen(initialYear, viewModel)
+        CalendarScreen(initialYear, initialMonth, viewModel)
     }
 }
